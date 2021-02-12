@@ -39,30 +39,33 @@ function draw()
 {
 
  text(score,100,100)
-  if (keyDown(UP_ARROW))
+  if (keyDown("w"))
   {
-    main.y=main.y-4
+    main.y=main.y-(score+10/5)
+    
   }
-  if (keyDown(DOWN_ARROW))
+  if (keyDown("s"))
   {
-    main.y=main.y+4
+    main.y=main.y+(score+10/5)
   }
-  if (keyDown(LEFT_ARROW))
+  if (keyDown("a"))
   {
-    main.x=main.x-4
+    main.x=main.x-(score+10/5)
   }
-  if (keyDown(RIGHT_ARROW))
+  if (keyDown("d"))
   {
-    main.x=main.x+4
+    main.x=main.x+(score+10/5)
   }
-  if (keyDown("e") && monsterGroup.isTouching(main))
+  for (var i=0;i<monsterGroup.length;i++)
   {
-
-    monster.tint = "rgba(255, 255, 255, 0)";
-    monsterGroup.destroyEach()
+  
+  if ( monsterGroup.get(i).isTouching(main))
+  {
+ monsterGroup.get(i).destroy()
+   
     score=score+1
+    }
   }
-
   if (godGroup.isTouching(main))
   {
     main.velocityX=god.velocityX
@@ -100,7 +103,7 @@ function god1()
   {
   god = createSprite(1600,random(1,800))
   god.addImage("g",go)
-  god.scale=.4
+  god.scale= score/50
   god.velocityX=-level-5
   godGroup.add(god)
   }
