@@ -5,14 +5,16 @@ var level=1
 var main
 var vis = 255
 var score = 0
-
+var gameover 
+var gamestate=0
 
 function preload()
 {
 mon=loadImage("Images/s.png")
 back=loadImage("Images/download.jpg")
 go=loadImage("Images/god.png")
-mai=loadImage("images/main.png")
+mai=loadImage("Images/main.png")
+game=loadImage("Images/Gameover.png")
 }
 
 function setup()
@@ -28,6 +30,9 @@ function setup()
        main.addImage("m",mai)
        main.scale=.2
         
+        gameover = createSprite(800,400)
+       gameover.addImage("gam",game)
+
        godGroup=new Group()
        monsterGroup=new Group()
 
@@ -38,7 +43,22 @@ function setup()
 function draw()
 {
 
+  if (main.x<0)
+  {
+    gameover.visible=true
+    godGroup.setVelocityXEach(0)
+    monsterGroup.setVelocityXEach(0)
+    monsterGroup.destroyEach()
+    godGroup.destroyEach()
+    score=0
+    gamestate=gamestate+1
+  } else 
+  {
+    gameover.visible=false
+  }
  text(score,100,100)
+ if (gamestate=0)
+ {
   if (keyDown("w"))
   {
     main.y=main.y-(score+10/5)
@@ -56,6 +76,10 @@ function draw()
   {
     main.x=main.x+(score+10/5)
   }
+} else if (gamestate=1)
+{
+  //nothing
+}
   for (var i=0;i<monsterGroup.length;i++)
   {
   
